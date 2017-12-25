@@ -7,7 +7,11 @@ describe 'alt_name' do
   end
 
   it "doesn't return wrong alt name" do
-    expect(Preludes.new('A♭ minor').alt_name).not_to eq 'A♭ minor'
+    expect(Preludes.new('Ab minor').alt_name).not_to eq 'Ab minor'
+  end
+
+  it 'returns correct input for G# minor' do
+    expect(Preludes.new('G# minor').alt_name).to eq 'Ab minor'
   end
 end
 

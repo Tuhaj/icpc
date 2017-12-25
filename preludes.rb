@@ -8,7 +8,6 @@ class Preludes
   end
 
   NOTES = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-
   INVERSE_ACCIDENTALS = {
     '#' => 'b',
     'b' => '#'
@@ -23,22 +22,15 @@ class Preludes
   end
 
   def change_note
-    if @key_note[-1] == '#'
-      step = 1
-    else
-      step = -1
-    end
+    step = @key_note[-1] == '#' ? 1 : -1
     new_note_index = NOTES.find_index(@key_note[0]) + step
     @key_note[0] = NOTES[(new_note_index) % NOTES.size]
   end
 
   def alt_name
-    if has_accidental?
-      change_note
-      swap_accidental
-      "#{@key_note} #{@tonality}"
-    else
-      'UNIQUE'
-    end
+    return 'UNIQUE' unless has_accidental?
+    change_note
+    swap_accidental
+    "#{@key_note} #{@tonality}"
   end
 end
