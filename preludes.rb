@@ -1,5 +1,4 @@
-class Preludes
-
+class Preludes # https://icpc.baylor.edu/download/worldfinals/problems/2012-icpc-dress-rehearsal.pdf
   def initialize(key)
     @key = key
     key_parts = @key.split(' ')
