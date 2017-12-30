@@ -1,0 +1,25 @@
+{
+  "name": "icpc_2012",
+  "version": "1.0.0",
+  "description": "",
+  "main": "heliocentric.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tuhaj/icpc.git"
+  },
+  "keywords": [
+    "icpc"
+  ],
+  "author": "Tuhaj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tuhaj/icpc/issues"
+  },
+  "homepage": "https://github.com/Tuhaj/icpc#readme",
+  "devDependencies": {
+    "mocha": "^4.1.0"
+  }
+}
