@@ -1,4 +1,6 @@
-./node_modules/mocha/bin/mocha ./node_modules/mocha/bin/mocha heliocentric.test.js
+for tests run:
+
+npm test heliocentric.test.js
 
 Input
 Each test case is described by a single line containing two integers 0 ≤ e < 365 and 0 ≤ m < 687. These indicate which days Earth and Mars are at their respective orbits.

@@ -21,5 +21,8 @@
   "homepage": "https://github.com/Tuhaj/icpc#readme",
   "devDependencies": {
     "mocha": "^4.1.0"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
   }
 }
