@@ -3,43 +3,32 @@ class Polish
   # warning: assumes that the numbers are one digit, belonging to range Array(-9..9)
   def initialize(expression)
     @expression = expression.gsub(/\s+/, "") # TODO rewrite when used for longer numbers
+    @memo = empty_memo
   end
 
   def simplify
     simplified = ""
-    saved_operator = ""
-    argument_1 = ""
-    argument_2 = ""
-
     @expression.split('').each do |char|
-      char_used = false
       if operator?(char)
-        if saved_operator.empty?
-          saved_operator = char
-        else
-          simplified << saved_operator
-          simplified << argument_1
-          simplified << argument_2
-          saved_operator, argument_1, argument_2 = "", "", ""
-          saved_operator = char
+        if !@memo[:saved_operator].empty?
+          simplified << concat_memo
+          clean_memo
         end
-        next
+        @memo[:saved_operator] = char
+        next # if the char is an operator continue the loop from next char
       end
       if variable?(char)
-        simplified << saved_operator
-        simplified << argument_1
-        simplified << argument_2
-        saved_operator, argument_1, argument_2 = "", "", ""
+        simplified << concat_memo
+        clean_memo
       end
-      if !saved_operator.empty? && (argument_1.empty? || argument_2.empty?)
-        argument_1.empty? ? argument_1 = char : argument_2 = char
-        char_used = true
-      end
-      if can_evaluate(saved_operator, argument_1, argument_2)
-        simplified << evaluate_expression(saved_operator, argument_1, argument_2)
-        saved_operator, argument_1, argument_2 = "", "", ""
+      if !@memo[:saved_operator].empty? && has_empty_argument
+        @memo[:argument_1].empty? ? @memo[:argument_1] = char : @memo[:argument_2] = char
+        if can_evaluate
+          simplified << evaluated_expression
+          clean_memo
+        end
       else
-        simplified << char unless char_used
+        simplified << char
       end
     end
     simplified
@@ -47,12 +36,33 @@ class Polish
 
   private
 
-  def can_evaluate(operator, argument_1, argument_2)
-    !operator.empty? && !argument_1.empty? && !argument_2.empty?
+  def empty_memo
+    {
+      saved_operator: '',
+      argument_1: '',
+      argument_2: ''
+    }
   end
 
-  def evaluate_expression(operator, argument_1, argument_2)
-    String(eval("#{argument_1}#{operator}#{argument_2}"))
+  def clean_memo
+    @memo = empty_memo
+  end
+
+  def can_evaluate
+    !@memo.values.any?(&:empty?)
+  end
+
+  def concat_memo
+    @memo.values.join('')
+  end
+
+  def has_empty_argument
+    @memo[:argument_1].empty? || @memo[:argument_2].empty?
+  end
+
+  def evaluated_expression
+    exp = @memo[:argument_1] + @memo[:saved_operator] + @memo[:argument_2]
+    String(eval(exp))
   end
 
   def operator?(char)
