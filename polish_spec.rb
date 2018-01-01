@@ -11,6 +11,6 @@ describe 'polish' do
   end
 
   it 'returns correct simplification for * - 6 + x -6 - - 9 6 * 0 c' do
-    expect(Polish.new('* - 6 + x -6 - - 9 6 * 0 c').simplify).to eq '* - 6 + x -6 - 3 * 0 c'
+    expect(Polish.new('* - 6 + x -6 - - 9 6 * 0 c').simplify).to eq '*-6+x-6-3*0c'
   end
 end
